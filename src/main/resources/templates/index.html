@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Java Bookstore</title>
+    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <!-- Header fragment -->
+    <div th:replace="fragments :: header"></div>
+
+    <h1 class="text-center mb-4">Java Bookstore</h1>
+
+    <!-- Featured Products -->
+    <h2 class="mb-3">Featured Books</h2>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Effective Java</h5>
+                    <p class="card-text">Best practices for Java programming.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Java: The Complete Reference</h5>
+                    <p class="card-text">A comprehensive guide to the Java language.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Java Performance</h5>
+                    <p class="card-text">The definitive guide to optimizing the performance of Java applications.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Java Concurrency in Practice</h5>
+                    <p class="card-text">A deep dive into concurrency and multithreading in Java.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Page</title>
+    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <!-- Header fragment -->
+    <div th:replace="fragments :: header"></div>
+
+    <h1 class="text-center text-danger mb-4">Oops! Something went wrong.</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <!-- Displaying the custom error message -->
+            <p class="lead text-danger" th:text="${message}"></p>
+
+            <!-- Link to Home Page -->
+            <p class="mt-4">
+                <a th:href="@{/}" class="btn btn-primary">
+                    Return to Home Page
+                </a>
+            </p>
+        </div>
+    </div>
+
+</body>
+</html>

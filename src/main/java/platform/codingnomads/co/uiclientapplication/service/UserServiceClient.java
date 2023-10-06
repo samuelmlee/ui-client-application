@@ -17,12 +17,12 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class UserServiceClient {
 
     @LoadBalanced
     private final RestTemplate restTemplate;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(UserServiceClient.class);
 
     private static final String USER_MICROSERVICE_URL = "http://USER-MICROSERVICE";
 
@@ -40,6 +40,21 @@ public class UserService {
             LOGGER.error("Network error while fetching User with username {} : {}", username, e.getMessage());
         } catch (RestClientException e) {
             LOGGER.error("Error while fetching User with username {} : {} : ", username, e.getMessage());
+        }
+        return Optional.empty();
+    }
+
+    public Optional<User> createNewUser(User user) {
+        try {
+            ResponseEntity<User> response = restTemplate.postForEntity(
+                    USER_MICROSERVICE_URL + "/user", user, User.class);
+            if (response.getStatusCode().is2xxSuccessful()) {
+                return Optional.ofNullable(response.getBody());
+            }
+        } catch (ResourceAccessException e) {
+            LOGGER.error("Network error while creating User {} : {}", user, e.getMessage());
+        } catch (RestClientException e) {
+            LOGGER.error("Error while creating User {} : {} : ", user, e.getMessage());
         }
         return Optional.empty();
     }

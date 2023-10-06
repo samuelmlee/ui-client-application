@@ -1,18 +1,18 @@
 package platform.codingnomads.co.uiclientapplication.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@ToString
 public class User {
 
-    @JsonProperty("userId")
     private Long id;
 
     private String username;
@@ -22,4 +22,6 @@ public class User {
     private String email;
 
     private String fullName;
+
+    private List<Role> authorities = new ArrayList<>();
 }

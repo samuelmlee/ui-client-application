@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body class="bg-light">
+
+<!-- Header Fragment -->
+<div th:replace="fragments :: header"></div>
+
+<div class="container py-5">
+    <h2 class="text-center mb-4">Login to Access Your Account</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="border p-5 rounded bg-white">
+                <!-- Login Form -->
+                <form th:action="@{/login}" method="post" class="mb-3">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username:</label>
+                        <input type="text" id="username" name="username" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+
+                <!-- Register Link -->
+                <p>Don't have an account? <a th:href="@{/register}">Register now</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
