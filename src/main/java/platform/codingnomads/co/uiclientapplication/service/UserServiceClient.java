@@ -5,15 +5,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import platform.codingnomads.co.uiclientapplication.exception.UserCreationFailedException;
 import platform.codingnomads.co.uiclientapplication.model.User;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,36 +26,40 @@ public class UserServiceClient {
 
     private static final String USER_MICROSERVICE_URL = "http://USER-MICROSERVICE";
 
-    public Optional<User> fetchUserByUsername(String username) {
-        Map<String, String> uriVariables = new HashMap<>();
-        uriVariables.put("username", username);
+
+    public User fetchUserByUsername(String username) throws RestClientException, UsernameNotFoundException {
         try {
+            Map<String, String> uriVariables = new HashMap<>();
+            uriVariables.put("username", username);
 
             ResponseEntity<User> response = restTemplate.getForEntity(
                     USER_MICROSERVICE_URL + "/user/username/{username}", User.class, uriVariables);
-            if (response.getStatusCode().is2xxSuccessful()) {
-                return Optional.ofNullable(response.getBody());
+
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                throw new UsernameNotFoundException("User not found with username : " + username);
             }
-        } catch (ResourceAccessException e) {
-            LOGGER.error("Network error while fetching User with username {} : {}", username, e.getMessage());
+            return response.getBody();
+
         } catch (RestClientException e) {
-            LOGGER.error("Error while fetching User with username {} : {} : ", username, e.getMessage());
+            LOGGER.error("Error fetching user by username : {}, {}", username, e.getMessage());
+            throw e;
         }
-        return Optional.empty();
     }
 
-    public Optional<User> createNewUser(User user) {
+    public User createNewUser(User user) throws RestClientException, UserCreationFailedException {
         try {
             ResponseEntity<User> response = restTemplate.postForEntity(
                     USER_MICROSERVICE_URL + "/user", user, User.class);
-            if (response.getStatusCode().is2xxSuccessful()) {
-                return Optional.ofNullable(response.getBody());
+
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                throw new UserCreationFailedException("User creation failed for User : " + user);
             }
-        } catch (ResourceAccessException e) {
-            LOGGER.error("Network error while creating User {} : {}", user, e.getMessage());
+
+            return response.getBody();
+
         } catch (RestClientException e) {
-            LOGGER.error("Error while creating User {} : {} : ", user, e.getMessage());
+            LOGGER.error("Error while creating user: {}", e.getMessage());
+            throw e;
         }
-        return Optional.empty();
     }
 }

@@ -47,7 +47,7 @@ public class ViewController {
         }
     }
 
-    @GetMapping("/items")
+    @GetMapping("/item-list")
     public String showItems(Model model) {
         model.addAttribute("items", itemService.fetchAllItems());
         return "item-list";

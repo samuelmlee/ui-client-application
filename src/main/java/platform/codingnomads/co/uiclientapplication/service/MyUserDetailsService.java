@@ -14,7 +14,6 @@ import platform.codingnomads.co.uiclientapplication.model.User;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,19 +26,19 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = userServiceClient.fetchUserByUsername(username);
+        User user = userServiceClient.fetchUserByUsername(username);
 
-        if (optionalUser.isEmpty()) {
+        if (user == null) {
             throw new UsernameNotFoundException("User not found with username : {}" + username);
         }
 
-        List<GrantedAuthority> authorities = optionalUser.get().getAuthorities().stream()
-                .map(role -> new SimpleGrantedAuthority(role.toString()))
+        List<GrantedAuthority> authorities = user.getAuthorities().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getRole()))
                 .collect(Collectors.toList());
 
-        return optionalUser.map(user -> new org.springframework.security.core.userdetails.User(
+        return new org.springframework.security.core.userdetails.User(
                 username, user.getPassword(),
-                true, true, true, true, authorities)).orElse(null);
+                true, true, true, true, authorities);
     }
 
 
@@ -55,20 +54,20 @@ public class MyUserDetailsService implements UserDetailsService {
                 .password(passwordEncoder.encode(user.getPassword()))
                 .email(user.getEmail())
                 .fullName(user.getFullName())
-                .authorities(Collections.singletonList(Role.ROLE_USER))
+                .authorities(Collections.singletonList(Role.builder().role("ROLE_USER").build()))
                 .build();
 
         try {
-            return userServiceClient.createNewUser(newUser).orElse(null);
+            return userServiceClient.createNewUser(newUser);
         } catch (Exception e) {
             throw new IllegalStateException(e.getMessage(), e.getCause());
         }
     }
 
     private void checkUsername(User user) throws UserAlreadyExistsException {
-        Optional<User> optionalUser = userServiceClient.fetchUserByUsername(user.getUsername());
+        User userFound = userServiceClient.fetchUserByUsername(user.getUsername());
 
-        if (optionalUser.isPresent()) {
+        if (userFound == null) {
             throw new UserAlreadyExistsException("User already exists for username : " + user.getUsername());
         }
     }

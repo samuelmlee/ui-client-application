@@ -15,18 +15,19 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/itemList}">Item List</a>
+                    <a class="nav-link" th:href="@{/item-list}">Item List</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item mr-3">
                     <a class="nav-link" th:href="@{/cart}">Cart</a>
                 </li>
-  
-                <li class="nav-item mr-3" th:if="${#authentication.principal == 'anonymousUser'}">
+
+                <li class="nav-item mr-3" style="margin-right: 10px"
+                    th:if="${#authentication.principal == 'anonymousUser'}">
                     <a th:href="@{/login}" class="btn btn-outline-primary">Login</a>
                 </li>
-                <li class="nav-item" th:if="${#authentication.principal == 'anonymousUser'}">
+                <li class="nav-item" style="margin-right: 10px" th:if="${#authentication.principal == 'anonymousUser'}">
                     <a th:href="@{/register}" class="btn btn-outline-success">Register</a>
                 </li>
 
