@@ -67,10 +67,9 @@ public class ViewController {
     @PostMapping("/cart/{itemId}")
     public String addToCart(@PathVariable("itemId") Long itemId, Authentication authentication, Model model) {
         try {
-            if (authentication.getPrincipal() instanceof CustomUserDetails) {
-                Long userId = ((CustomUserDetails) authentication.getPrincipal()).getId();
-                Cart cart = cartServiceClient.addNewCartItem(itemId, userId);
-            }
+            Long userId = ((CustomUserDetails) authentication.getPrincipal()).getId();
+            Cart cart = cartServiceClient.addNewCartItem(itemId, userId);
+
         } catch (CartAddItemFailedException | RestClientException e) {
             model.addAttribute("message", e.getMessage());
             return "error";
