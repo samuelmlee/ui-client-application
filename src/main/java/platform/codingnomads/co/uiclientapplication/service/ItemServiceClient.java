@@ -17,12 +17,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ItemService {
+public class ItemServiceClient {
 
     @LoadBalanced
     private final RestTemplate restTemplate;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(ItemService.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ItemServiceClient.class);
 
     private static final String ITEM_MICROSERVICE_URL = "http://ITEM-MICROSERVICE";
 

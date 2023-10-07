@@ -46,7 +46,7 @@ public class UserServiceClient {
         }
     }
 
-    public User createNewUser(User user) throws RestClientException, UserCreationFailedException {
+    public void createNewUser(User user) throws RestClientException, UserCreationFailedException {
         try {
             ResponseEntity<User> response = restTemplate.postForEntity(
                     USER_MICROSERVICE_URL + "/user", user, User.class);
@@ -54,8 +54,6 @@ public class UserServiceClient {
             if (!response.getStatusCode().is2xxSuccessful()) {
                 throw new UserCreationFailedException("User creation failed for User : " + user);
             }
-
-            return response.getBody();
 
         } catch (RestClientException e) {
             LOGGER.error("Error while creating user: {}", e.getMessage());
