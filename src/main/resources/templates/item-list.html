@@ -39,7 +39,7 @@
                     <td th:text="${item.name}"></td>
                     <td th:text="${item.description}"></td>
                     <td>
-                        <form th:action="@{'/cart/' + ${item.id}}" method="post">
+                        <form th:action="@{'/cart/add/' + ${item.id}}" method="post">
                             <button type="submit" class="btn btn-primary">Add</button>
                         </form>
                     </td>

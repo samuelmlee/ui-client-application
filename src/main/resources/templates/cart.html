@@ -33,20 +33,20 @@
                     <td colspan="5">No items in cart.</td>
                 </tr>
                 <tr th:each="cartItem : ${cartItems}">
-                    <th scope="row" th:text="${cartItem.cartItem.id}"></th>
+                    <th scope="row" th:text="${cartItem.cartItem.itemId}"></th>
                     <td th:text="${cartItem.name}"></td>
                     <td th:text="${cartItem.description}"></td>
                     <td th:text="${cartItem.cartItem.amount}"></td>
-                    <td>
-                        <form th:action="@{'/cart/remove/' + ${cartItem.cartItem.id}}" method="post"
+                    <td style="width: 200px">
+                        <form th:action="@{'/cart/remove/' + ${cartItem.cartItem.itemId}}" method="post"
                               style="display:inline;">
                             <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                         </form>
-                        <form th:action="@{'/cart/add/' + ${cartItem.cartItem.id}}" method="post"
+                        <form th:action="@{'/cart/add/' + ${cartItem.cartItem.itemId}}" method="post"
                               style="display:inline;">
                             <button type="submit" class="btn btn-success btn-sm">+</button>
                         </form>
-                        <form th:action="@{'/cart/subtract/' + ${cartItem.cartItem.id}}" method="post"
+                        <form th:action="@{'/cart/subtract/' + ${cartItem.cartItem.itemId}}" method="post"
                               style="display:inline;">
                             <button type="submit" class="btn btn-warning btn-sm">-</button>
                         </form>

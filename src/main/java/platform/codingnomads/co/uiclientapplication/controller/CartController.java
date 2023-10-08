@@ -17,6 +17,7 @@ import platform.codingnomads.co.uiclientapplication.model.CartItemView;
 import platform.codingnomads.co.uiclientapplication.model.CustomUserDetails;
 import platform.codingnomads.co.uiclientapplication.service.CartService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -28,8 +29,11 @@ public class CartController {
 
     private final CartService cartService;
 
-    @PostMapping("/{itemId}")
-    public String addToCart(@PathVariable("itemId") Long itemId, Authentication authentication, Model model) {
+    @PostMapping("/add/{itemId}")
+    public String addToCart(@PathVariable("itemId") Long itemId,
+                            Authentication authentication,
+                            Model model,
+                            HttpServletRequest request) {
         try {
             Long userId = ((CustomUserDetails) authentication.getPrincipal()).getId();
             cartServiceClient.addNewCartItem(itemId, userId);
@@ -39,7 +43,8 @@ public class CartController {
             return "error";
         }
 
-        return "redirect:/item-list";
+        String referer = request.getHeader("Referer");
+        return "redirect:" + (referer != null ? referer : "/item-list");
     }
 
     @GetMapping
