@@ -28,7 +28,7 @@ public class CartServiceClient {
 
     private final String CART_SERVICE_URL = "http://CART-MICROSERVICE/cart";
 
-    public Cart addNewCartItem(Long itemId, Long userId) throws CartAddItemFailedException, RestClientException {
+    public void addNewCartItem(Long itemId, Long userId) throws CartAddItemFailedException, RestClientException {
         try {
             Map<String, Long> uriVariables = new HashMap<>();
             uriVariables.put("userId", userId);
@@ -40,7 +40,6 @@ public class CartServiceClient {
             if (response.getStatusCode() != HttpStatus.OK) {
                 throw new CartAddItemFailedException("Failed to add item to cart with itemId : " + itemId + " and userId : " + userId);
             }
-            return response.getBody();
         } catch (RestClientException e) {
             LOGGER.error("Error sending request to add item with id : {},  userId {}", itemId, e.getMessage());
             throw e;
@@ -65,4 +64,21 @@ public class CartServiceClient {
     }
 
 
+    public int fetchTotalItemsForUser(Long userId) throws RestClientException {
+        try {
+            Map<String, Long> uniVariables = new HashMap<>();
+            uniVariables.put("userId", userId);
+
+            ResponseEntity<Integer> response = restTemplate.getForEntity(CART_SERVICE_URL + "/items-count/{userId}", Integer.class, uniVariables);
+
+            if (response.getBody() == null) {
+                LOGGER.warn("Received null body in response for userId: {}", userId);
+                return 0;
+            }
+            return response.getBody();
+        } catch (RestClientException e) {
+            LOGGER.error("Error getting total items count in cart for userId : {}, {}", userId, e.getMessage());
+            throw e;
+        }
+    }
 }
