@@ -54,7 +54,7 @@ public class CartServiceClient {
             ResponseEntity<Cart> response = restTemplate.getForEntity(CART_SERVICE_URL + "/{userId}", Cart.class, uriVariables);
 
             if (response.getStatusCode() != HttpStatus.OK) {
-                throw new CartNotFoundException("Error fetching cart for userId :" + String.valueOf(userId));
+                throw new CartNotFoundException("Error fetching cart for userId :" + userId);
             }
             return response.getBody();
         } catch (RestClientException e) {

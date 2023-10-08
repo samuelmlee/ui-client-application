@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User's Cart</title>
+    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="/webjars/font-awesome/5.15.1/css/all.min.css">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+
+    <div th:replace="fragments :: header"></div>
+
+    <h1 class="text-center mb-4">Your Cart</h1>
+
+    <!-- Cart table -->
+    <div class="row">
+        <div class="col">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Item Reference</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Count</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${cartItems.isEmpty()}">
+                    <td colspan="5">No items in cart.</td>
+                </tr>
+                <tr th:each="cartItem : ${cartItems}">
+                    <th scope="row" th:text="${cartItem.cartItem.id}"></th>
+                    <td th:text="${cartItem.name}"></td>
+                    <td th:text="${cartItem.description}"></td>
+                    <td th:text="${cartItem.cartItem.amount}"></td>
+                    <td>
+                        <form th:action="@{'/cart/remove/' + ${cartItem.cartItem.id}}" method="post"
+                              style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                        </form>
+                        <form th:action="@{'/cart/add/' + ${cartItem.cartItem.id}}" method="post"
+                              style="display:inline;">
+                            <button type="submit" class="btn btn-success btn-sm">+</button>
+                        </form>
+                        <form th:action="@{'/cart/subtract/' + ${cartItem.cartItem.id}}" method="post"
+                              style="display:inline;">
+                            <button type="submit" class="btn btn-warning btn-sm">-</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

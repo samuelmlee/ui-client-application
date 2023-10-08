@@ -2,18 +2,13 @@ package platform.codingnomads.co.uiclientapplication.model;
 
 import lombok.*;
 
+import java.util.List;
 
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class CartItem {
-
-    private Long id;
-
-    private Long itemId;
-
-    private Integer amount;
-
+public class BatchItemRequest {
+    private List<Long> itemIds;
 }

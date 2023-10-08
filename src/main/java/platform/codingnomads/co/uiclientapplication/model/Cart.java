@@ -19,7 +19,4 @@ public class Cart {
 
     private List<CartItem> items;
 
-    public static int getCartItemsCount(Cart cart) {
-        return cart.getItems().stream().mapToInt(CartItem::getAmount).sum();
-    }
 }
