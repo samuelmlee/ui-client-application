@@ -1,4 +1,4 @@
-package platform.codingnomads.co.uiclientapplication.service;
+package platform.codingnomads.co.uiclientapplication.client;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import platform.codingnomads.co.uiclientapplication.exception.CartAddItemFailedException;
@@ -16,7 +16,7 @@ import platform.codingnomads.co.uiclientapplication.model.Cart;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class CartServiceClient {
 
@@ -69,7 +69,7 @@ public class CartServiceClient {
             Map<String, Long> uniVariables = new HashMap<>();
             uniVariables.put("userId", userId);
 
-            ResponseEntity<Integer> response = restTemplate.getForEntity(CART_SERVICE_URL + "/items-count/{userId}", Integer.class, uniVariables);
+            ResponseEntity<Integer> response = restTemplate.getForEntity(CART_SERVICE_URL + "/{userId}/items-count", Integer.class, uniVariables);
 
             if (response.getBody() == null) {
                 LOGGER.warn("Received null body in response for userId: {}", userId);

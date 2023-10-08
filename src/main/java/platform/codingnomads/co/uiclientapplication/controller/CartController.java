@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestClientException;
+import platform.codingnomads.co.uiclientapplication.client.CartServiceClient;
 import platform.codingnomads.co.uiclientapplication.exception.CartAddItemFailedException;
 import platform.codingnomads.co.uiclientapplication.exception.CartNotFoundException;
 import platform.codingnomads.co.uiclientapplication.exception.ItemFetchingException;
 import platform.codingnomads.co.uiclientapplication.model.CartItemView;
 import platform.codingnomads.co.uiclientapplication.model.CustomUserDetails;
 import platform.codingnomads.co.uiclientapplication.service.CartService;
-import platform.codingnomads.co.uiclientapplication.service.CartServiceClient;
 
 import java.util.List;
 

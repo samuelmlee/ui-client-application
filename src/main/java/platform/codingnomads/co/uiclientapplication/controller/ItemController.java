@@ -5,10 +5,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import platform.codingnomads.co.uiclientapplication.client.CartServiceClient;
+import platform.codingnomads.co.uiclientapplication.client.ItemServiceClient;
 import platform.codingnomads.co.uiclientapplication.exception.ItemFetchingException;
 import platform.codingnomads.co.uiclientapplication.model.CustomUserDetails;
-import platform.codingnomads.co.uiclientapplication.service.CartServiceClient;
-import platform.codingnomads.co.uiclientapplication.service.ItemServiceClient;
 
 import java.util.ArrayList;
 

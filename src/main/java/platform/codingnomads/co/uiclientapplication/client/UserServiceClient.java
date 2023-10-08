@@ -1,4 +1,4 @@
-package platform.codingnomads.co.uiclientapplication.service;
+package platform.codingnomads.co.uiclientapplication.client;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import platform.codingnomads.co.uiclientapplication.exception.UserCreationFailedException;
@@ -15,7 +15,7 @@ import platform.codingnomads.co.uiclientapplication.model.User;
 import java.util.HashMap;
 import java.util.Map;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class UserServiceClient {
 

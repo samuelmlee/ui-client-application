@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
+import platform.codingnomads.co.uiclientapplication.client.UserServiceClient;
 import platform.codingnomads.co.uiclientapplication.exception.UserAlreadyExistsException;
 import platform.codingnomads.co.uiclientapplication.exception.UserCreationFailedException;
 import platform.codingnomads.co.uiclientapplication.model.CustomUserDetails;

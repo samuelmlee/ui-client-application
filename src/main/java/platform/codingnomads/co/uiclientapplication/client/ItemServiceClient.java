@@ -1,4 +1,4 @@
-package platform.codingnomads.co.uiclientapplication.service;
+package platform.codingnomads.co.uiclientapplication.client;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -9,7 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import platform.codingnomads.co.uiclientapplication.exception.ItemFetchingException;
@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class ItemServiceClient {
 

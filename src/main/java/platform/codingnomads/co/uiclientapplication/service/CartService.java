@@ -2,6 +2,8 @@ package platform.codingnomads.co.uiclientapplication.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import platform.codingnomads.co.uiclientapplication.client.CartServiceClient;
+import platform.codingnomads.co.uiclientapplication.client.ItemServiceClient;
 import platform.codingnomads.co.uiclientapplication.exception.CartNotFoundException;
 import platform.codingnomads.co.uiclientapplication.exception.ItemFetchingException;
 import platform.codingnomads.co.uiclientapplication.model.Cart;
