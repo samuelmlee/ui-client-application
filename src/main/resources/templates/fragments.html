@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <!-- ... -->
+
 </head>
 <body>
 
@@ -34,6 +34,15 @@
 
                 <li class="nav-item ml-3" th:if="${#authentication.principal != 'anonymousUser'}">
                     <a th:href="@{/logout}" class="btn btn-outline-danger">Logout</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto" style="margin-left: auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/cart}">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span th:if="${cartItemsCount > 0}" class="badge badge-pill badge-primary"
+                              style="background-color: blue;" th:text="${cartItemsCount}"></span>
+                    </a>
                 </li>
             </ul>
         </div>

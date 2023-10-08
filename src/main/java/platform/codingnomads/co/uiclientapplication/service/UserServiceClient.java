@@ -24,7 +24,7 @@ public class UserServiceClient {
 
     private final Logger LOGGER = LoggerFactory.getLogger(UserServiceClient.class);
 
-    private static final String USER_MICROSERVICE_URL = "http://USER-MICROSERVICE";
+    private static final String USER_MICROSERVICE_URL = "http://USER-MICROSERVICE/user";
 
 
     public User fetchUserByUsername(String username) throws RestClientException, UsernameNotFoundException {
@@ -33,7 +33,7 @@ public class UserServiceClient {
             uriVariables.put("username", username);
 
             ResponseEntity<User> response = restTemplate.getForEntity(
-                    USER_MICROSERVICE_URL + "/user/username/{username}", User.class, uriVariables);
+                    USER_MICROSERVICE_URL + "/username/{username}", User.class, uriVariables);
 
             if (!response.getStatusCode().is2xxSuccessful()) {
                 throw new UsernameNotFoundException("User not found with username : " + username);

@@ -24,12 +24,12 @@ public class ItemServiceClient {
 
     private final Logger LOGGER = LoggerFactory.getLogger(ItemServiceClient.class);
 
-    private static final String ITEM_MICROSERVICE_URL = "http://ITEM-MICROSERVICE";
+    private static final String ITEM_MICROSERVICE_URL = "http://ITEM-MICROSERVICE/item";
 
     public List<Item> fetchAllItems() {
         try {
             ResponseEntity<Item[]> response = restTemplate.getForEntity(
-                    ITEM_MICROSERVICE_URL + "/item", Item[].class);
+                    ITEM_MICROSERVICE_URL, Item[].class);
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
                 return Arrays.asList(response.getBody());
             }

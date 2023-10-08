@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestClientException;
 import platform.codingnomads.co.uiclientapplication.exception.CartAddItemFailedException;
+import platform.codingnomads.co.uiclientapplication.exception.CartNotFoundException;
 import platform.codingnomads.co.uiclientapplication.exception.UserAlreadyExistsException;
 import platform.codingnomads.co.uiclientapplication.exception.UserCreationFailedException;
 import platform.codingnomads.co.uiclientapplication.model.Cart;
@@ -59,8 +60,15 @@ public class ViewController {
     }
 
     @GetMapping("/item-list")
-    public String showItems(Model model) {
+    public String showItems(Authentication authentication, Model model) {
+        try {
+            Long userId = ((CustomUserDetails) authentication.getPrincipal()).getId();
+            int cartItemsCount = Cart.getCartItemsCount(cartServiceClient.fetchCartByUserId(userId));
+            model.addAttribute("cartItemsCount", cartItemsCount);
+        } catch (CartNotFoundException | RestClientException ignored) {
+        }
         model.addAttribute("items", itemServiceClient.fetchAllItems());
+
         return "item-list";
     }
 
