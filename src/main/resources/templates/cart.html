@@ -38,16 +38,21 @@
                     <td th:text="${cartItem.description}"></td>
                     <td th:text="${cartItem.cartItem.amount}"></td>
                     <td style="width: 200px">
+                        <!-- Remove button remains unchanged -->
                         <form th:action="@{'/cart/remove/' + ${cartItem.cartItem.itemId}}" method="post"
                               style="display:inline;">
                             <button type="submit" class="btn btn-danger btn-sm">Remove</button>
                         </form>
-                        <form th:action="@{'/cart/add/' + ${cartItem.cartItem.itemId}}" method="post"
+
+                        <form th:action="@{'/cart/update-amount/' + ${cartItem.cartItem.itemId}}" method="post"
                               style="display:inline;">
+                            <input type="hidden" name="amount-update" value="1"/>
                             <button type="submit" class="btn btn-success btn-sm">+</button>
                         </form>
-                        <form th:action="@{'/cart/subtract/' + ${cartItem.cartItem.itemId}}" method="post"
+                        
+                        <form th:action="@{'/cart/update-amount/' + ${cartItem.cartItem.itemId}}" method="post"
                               style="display:inline;">
+                            <input type="hidden" name="amount-update" value="-1"/>
                             <button type="submit" class="btn btn-warning btn-sm">-</button>
                         </form>
                     </td>
