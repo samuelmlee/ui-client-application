@@ -31,6 +31,14 @@
                     <a th:href="@{/register}" class="btn btn-outline-success">Register</a>
                 </li>
 
+                <li class="nav-item mr-3" th:if="${#authentication.principal != 'anonymousUser'}">
+                    <span class="nav-link">
+                         <span th:text="${#authentication.name}"></span>
+                        <small th:each="auth : ${#authentication.authorities}"
+                               th:text="${auth.getAuthority()}"></small>
+                        </span>
+                </li>
+
 
                 <li class="nav-item ml-3" th:if="${#authentication.principal != 'anonymousUser'}">
                     <a th:href="@{/logout}" class="btn btn-outline-danger">Logout</a>
