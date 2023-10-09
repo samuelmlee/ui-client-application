@@ -80,7 +80,7 @@ public class MyUserDetailsService implements UserDetailsService {
         } catch (UsernameNotFoundException ignored) {
             return false;
         } catch (RestClientException e) {
-            LOGGER.error("Technical checking existence of User for username : {}", username, e);
+            LOGGER.error("Technical error checking existence of User for username : {}", username, e);
             throw e;
         }
     }
