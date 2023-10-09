@@ -42,17 +42,14 @@ public class CartController {
         try {
             Long userId = ((CustomUserDetails) authentication.getPrincipal()).getId();
 
-            List<CartItemView> cartItems = cartService.addNewCartItem(itemId, userId);
-
-            model.addAttribute("cartItems", cartItems);
-            model.addAttribute("cartItemsCount", CartItemView.getCartItemsViewsCount(cartItems));
+            cartService.addNewCartItem(itemId, userId);
 
         } catch (CartAddItemFailedException | ItemFetchingException | RestClientException e) {
             model.addAttribute("message", e.getMessage());
             return "error";
         }
 
-        return "item-list";
+        return "redirect:/item-list";
     }
 
     @PostMapping("/remove/{itemId}")
