@@ -34,7 +34,7 @@ public class UserServiceClient {
 
             ResponseEntity<User> response = restTemplate.getForEntity(
                     USER_MICROSERVICE_URL + "/username/{username}", User.class, uriVariables);
-            
+
             return response.getBody();
 
         } catch (RestClientException e) {
@@ -54,6 +54,25 @@ public class UserServiceClient {
 
         } catch (RestClientException e) {
             LOGGER.error("Error while creating user: {}", e.getMessage());
+            throw e;
+        }
+    }
+
+    public Boolean isExistingUsername(String username) throws RestClientException {
+        try {
+            Map<String, String> uriVariables = new HashMap<>();
+            uriVariables.put("username", username);
+
+            ResponseEntity<Boolean> response = restTemplate.getForEntity(USER_MICROSERVICE_URL + "/username/exists/{username}",
+                    Boolean.class, uriVariables);
+
+            if (!response.getStatusCode().is2xxSuccessful()) {
+                throw new UserCreationFailedException("Unable to check for existence of username : " + username);
+            }
+            return response.getBody();
+
+        } catch (RestClientException e) {
+            LOGGER.error("Error while checking existing username : {}", e.getMessage());
             throw e;
         }
     }

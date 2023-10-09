@@ -3,7 +3,6 @@ package platform.codingnomads.co.uiclientapplication.service;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import platform.codingnomads.co.uiclientapplication.client.UserServiceClient;
 import platform.codingnomads.co.uiclientapplication.exception.UserAlreadyExistsException;
@@ -52,7 +50,7 @@ public class MyUserDetailsService implements UserDetailsService {
     public void createNewUser(User user) throws UserAlreadyExistsException,
             RestClientException, UserCreationFailedException {
 
-        if (checkIsExistingUsername(user.getUsername())) {
+        if (userServiceClient.isExistingUsername(user.getUsername())) {
             throw new UserAlreadyExistsException("Existing User found for username : " + user.getUsername());
         }
 
@@ -71,20 +69,6 @@ public class MyUserDetailsService implements UserDetailsService {
             userServiceClient.createNewUser(newUser);
         } catch (RestClientException | UserCreationFailedException e) {
             throw new UserCreationFailedException(String.format("User creation failed for user %s: , with Error %s", user, e.getMessage()));
-        }
-    }
-
-    private boolean checkIsExistingUsername(String username) throws RestClientException {
-        try {
-            userServiceClient.fetchUserByUsername(username);
-            return true;
-            
-        } catch (HttpClientErrorException e) {
-            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
-                return false;
-            }
-            LOGGER.error("Technical error checking existence of User for username : {}", username, e);
-            throw e;
         }
     }
 
