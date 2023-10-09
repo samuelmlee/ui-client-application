@@ -34,10 +34,7 @@ public class UserServiceClient {
 
             ResponseEntity<User> response = restTemplate.getForEntity(
                     USER_MICROSERVICE_URL + "/username/{username}", User.class, uriVariables);
-
-            if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
-                throw new UsernameNotFoundException("User not found with username : " + username);
-            }
+            
             return response.getBody();
 
         } catch (RestClientException e) {

@@ -3,6 +3,7 @@ package platform.codingnomads.co.uiclientapplication.service;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 import platform.codingnomads.co.uiclientapplication.client.UserServiceClient;
 import platform.codingnomads.co.uiclientapplication.exception.UserAlreadyExistsException;
@@ -72,14 +74,15 @@ public class MyUserDetailsService implements UserDetailsService {
         }
     }
 
-    private boolean checkIsExistingUsername(String username) throws UserAlreadyExistsException, RestClientException {
+    private boolean checkIsExistingUsername(String username) throws RestClientException {
         try {
             userServiceClient.fetchUserByUsername(username);
             return true;
-
-        } catch (UsernameNotFoundException ignored) {
-            return false;
-        } catch (RestClientException e) {
+            
+        } catch (HttpClientErrorException e) {
+            if (e.getStatusCode() == HttpStatus.NOT_FOUND) {
+                return false;
+            }
             LOGGER.error("Technical error checking existence of User for username : {}", username, e);
             throw e;
         }
