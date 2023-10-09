@@ -68,23 +68,21 @@ public class MyUserDetailsService implements UserDetailsService {
         try {
             userServiceClient.createNewUser(newUser);
         } catch (RestClientException | UserCreationFailedException e) {
-            throw new RuntimeException(e.getMessage(), e.getCause());
+            throw new UserCreationFailedException(String.format("User creation failed for user %s: , with Error %s", user, e.getMessage()));
         }
     }
 
-    private boolean checkIsExistingUsername(String username) throws UserAlreadyExistsException {
+    private boolean checkIsExistingUsername(String username) throws UserAlreadyExistsException, RestClientException {
         try {
-            User userFound = userServiceClient.fetchUserByUsername(username);
-            return userFound != null;
+            userServiceClient.fetchUserByUsername(username);
+            return true;
 
-        } catch (UsernameNotFoundException e) {
+        } catch (UsernameNotFoundException ignored) {
             return false;
         } catch (RestClientException e) {
-            LOGGER.error("Error checking for the existence of user with username: {}. Error: {}", username, e.getMessage());
-            throw new RuntimeException("An error occurred while checking the username: " + e.getMessage());
+            LOGGER.error("Technical checking existence of User for username : {}", username, e);
+            throw e;
         }
-
-
     }
 
     private void checkPassword(String password) {

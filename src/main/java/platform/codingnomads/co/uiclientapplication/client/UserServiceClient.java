@@ -35,7 +35,7 @@ public class UserServiceClient {
             ResponseEntity<User> response = restTemplate.getForEntity(
                     USER_MICROSERVICE_URL + "/username/{username}", User.class, uriVariables);
 
-            if (!response.getStatusCode().is2xxSuccessful()) {
+            if (!response.getStatusCode().is2xxSuccessful() || response.getBody() == null) {
                 throw new UsernameNotFoundException("User not found with username : " + username);
             }
             return response.getBody();
@@ -49,7 +49,7 @@ public class UserServiceClient {
     public void createNewUser(User user) throws RestClientException, UserCreationFailedException {
         try {
             ResponseEntity<User> response = restTemplate.postForEntity(
-                    USER_MICROSERVICE_URL + "/user", user, User.class);
+                    USER_MICROSERVICE_URL, user, User.class);
 
             if (!response.getStatusCode().is2xxSuccessful()) {
                 throw new UserCreationFailedException("User creation failed for User : " + user);
